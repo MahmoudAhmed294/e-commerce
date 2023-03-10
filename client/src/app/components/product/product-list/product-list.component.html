@@ -1,0 +1,14 @@
+<div class="row my-5">
+    <div class="col-3" *ngFor="let product of products">
+        <app-product [product]="product"></app-product>
+    </div>
+</div>
+
+
+<div class="d-flex justify-content-center" *ngIf="pagination">
+
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [maxSize]="10" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)">
+    </pagination>
+</div>

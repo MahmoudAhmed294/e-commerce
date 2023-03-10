@@ -1,0 +1,20 @@
+<div class="row justify-content-center algin-items-center mt-5">
+    <div class="col-4 shadow-sm p-3 bg-body-tertiary rounded">
+
+        <form [formGroup]="loginForm" (ngSubmit)="loginForm.valid && login()" autocomplete="off">
+            <h2 class="text-center text-primary mb-5 mt-2">Login with your Account </h2>
+
+            <app-text-input [formControl]="$any(loginForm.controls['email'])" [label]="'Email'"></app-text-input>
+            <app-text-input [formControl]="$any(loginForm.controls['password'])" type="password"
+                [label]="'Password'"></app-text-input>
+
+            <button [disabled]="!loginForm.valid" class="btn btn-primary  mt-2" type="submit">Login</button>
+
+            <div class="d-flex mt-2">
+                <p>Need an Account</p>
+                <a class="ms-2 fw-bold" routerLink="/register">Register?</a>
+
+            </div>
+        </form>
+    </div>
+</div>
