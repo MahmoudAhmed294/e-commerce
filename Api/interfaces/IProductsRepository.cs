@@ -1,5 +1,4 @@
 using Api.Dto;
-using Api.Entities;
 using Api.Helpers;
 
 namespace Api.interfaces
@@ -8,9 +7,10 @@ namespace Api.interfaces
     {
 
         
-        Task<Product> GetProductAsync(int id);
-        Task<bool> AddProductToUserAsync(int id);
-        Task<PagedList<ProductDto>> GetProductsAsync(ProductParams userParams);
-        
+        Task<ProductDetailsDto> GetProductAsync(int id);
+
+        Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams);
+
+
     }
 }

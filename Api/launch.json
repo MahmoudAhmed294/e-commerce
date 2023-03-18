@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "debug-hot-reload",
+            "type": "pwa-chrome",
+            "request": "launch",
+            "url": "${auto-detect-url}",
+            "webRoot": "${workspaceFolder}",
+            "runtimeArgs": [
+                "--hot-reload"
+            ]
+        }
+    ]
+}

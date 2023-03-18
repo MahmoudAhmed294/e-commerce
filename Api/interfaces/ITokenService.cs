@@ -4,6 +4,6 @@ namespace Api.interfaces
 {
     public interface ITokenService
     {
-        string CreateToken(AppUser users);
+        string CreateToken(User users);
     }
 }

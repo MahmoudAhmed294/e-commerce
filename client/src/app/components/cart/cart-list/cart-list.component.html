@@ -1,1 +1,42 @@
-<p>aaa</p>
+<div class="my-5">
+    <div class="row text-primary border-bottom border-primary bg-light py-3">
+        <h6 class="col-8  ">Product</h6>
+        <h6 class="col-2  ">Quantity</h6>
+        <h6 class="col-1  ">Price</h6>
+        <h6 class="col-1  ">Action</h6>
+    </div>
+    <div *ngFor="let product of products" class="border-bottom border-secandary mb-1">
+        <app-cart-item [product]="product"></app-cart-item>
+
+    </div>
+</div>
+<div class="row justify-content-end mb-3">
+    <div class="col-4">
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="text-secondary">Subtotal Price:</p>
+            <p class="fw-bold">$144</p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="text-secondary">Shipping Cost:</p>
+            <p class="fw-bold">$10</p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="text-secondary">Discount</p>
+            <p class="fw-bold">$10.50</p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center">
+            <p class="fw-bold">Total</p>
+            <p class="fw-bold">$10.50</p>
+        </div>
+    </div>
+</div>
+<div class="d-flex justify-content-between">
+    <button class="btn btn-outline-primary">Continue Shopping</button>
+    <button class="btn btn-primary">Pay now</button>
+</div>
+<div class="d-flex justify-content-center my-3" *ngIf="pagination">
+    <pagination [boundaryLinks]="true" [totalItems]="pagination.totalItems" [itemsPerPage]="pagination.itemsPerPage"
+        [maxSize]="10" previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"
+        [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)">
+    </pagination>
+</div>

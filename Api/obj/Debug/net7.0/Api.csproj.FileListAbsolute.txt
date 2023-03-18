@@ -73,4 +73,8 @@ E:\project\shopping\project\Api\bin\Debug\net7.0\Microsoft.IdentityModel.Protoco
 E:\project\shopping\project\Api\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 E:\project\shopping\project\Api\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
 E:\project\shopping\project\Api\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
-E:\project\shopping\project\Api\bin\Debug\net7.0\Data\data.json
+E:\project\shopping\project\Api\bin\Debug\net7.0\Data\dev-data\category.json
+E:\project\shopping\project\Api\bin\Debug\net7.0\Data\dev-data\data.json
+E:\project\shopping\project\Api\bin\Debug\net7.0\Data\dev-data\products.json
+E:\project\shopping\project\Api\bin\Debug\net7.0\Data\dev-data\users.json
+E:\project\shopping\project\Api\bin\Debug\net7.0\launch.json

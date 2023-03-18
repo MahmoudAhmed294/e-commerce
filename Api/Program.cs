@@ -43,12 +43,13 @@ internal class Program
             var context = services.GetRequiredService<DataContext>();
             await context.Database.MigrateAsync();
             await Seed.SeedProducts(context);
+            await Seed.SeedUsers(context);
 
         }
         catch (Exception ex)
         {
             var logger = services.GetService<ILogger<Program>>();
-            logger.LogError(ex, "An error occurred during migration");
+            logger.LogError(ex.Source,ex.Message ,ex.HelpLink ,"An error occurred during migration");
 
         }
 

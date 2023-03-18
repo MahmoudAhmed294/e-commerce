@@ -1,7 +1,6 @@
-using Api.Dto;
 using Api.Entities;
 using Api.interfaces;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Data
 {
@@ -13,9 +12,10 @@ namespace Api.Data
             _context = context;
 
         }
-        public async Task<AppUser> GetUser(int id)
+        public async Task<User> GetUser(int id)
         {
-            return await _context.Users.FindAsync(id);
+            return await _context.Users.Include(p => p.Address).Include(c=>c.Cart).SingleOrDefaultAsync(u => u.Id == id);
         }
+
     }
 }

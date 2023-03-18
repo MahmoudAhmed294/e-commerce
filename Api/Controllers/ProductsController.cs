@@ -36,7 +36,7 @@ namespace Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProducts(int id)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProduct(int id)
         {
             var products = await _productsRepository.GetProductAsync(id);
 

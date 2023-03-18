@@ -1,3 +1,4 @@
+using Api.Dto;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Helpers
@@ -24,6 +25,11 @@ namespace Api.Helpers
             var items = await source.Skip((pageNumber -1)*pageSize).Take(pageSize).ToListAsync(); 
 
             return new PagedList<T>(items , count, pageNumber, pageSize);
+        }
+
+        internal static Task<PagedList<ProductDto>> CreateAsync(IEnumerable<ProductDto> products, int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
         }
     }
 }

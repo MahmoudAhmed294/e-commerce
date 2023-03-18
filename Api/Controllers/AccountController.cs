@@ -27,7 +27,7 @@ namespace Api.Controllers
         {
             if (await EmailExists(registerDto.Email)) return BadRequest("Email is already exists");
 
-            var user = _mapper.Map<AppUser>(registerDto);
+            var user = _mapper.Map<User>(registerDto);
 
             using var hmac = new HMACSHA512();
 
@@ -47,6 +47,7 @@ namespace Api.Controllers
                 Token = _tokenService.CreateToken(user),
             };
         }
+        
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {

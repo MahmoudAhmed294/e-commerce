@@ -5,6 +5,6 @@ namespace Api.interfaces
 {
     public interface IUserRepository
     {
-        public Task<AppUser> GetUser(int id);
+        public Task<User> GetUser(int id);
     }
 }

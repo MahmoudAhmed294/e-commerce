@@ -14,7 +14,7 @@ namespace Api.service
         {
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
         }
-        public string CreateToken(AppUser users)
+        public string CreateToken(User users)
         {
             var claims = new List<Claim>{
                 new Claim(JwtRegisteredClaimNames.NameId , users.Id.ToString()),

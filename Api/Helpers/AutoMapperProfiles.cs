@@ -8,8 +8,14 @@ namespace Api.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<RegisterDto, AppUser>();
+            CreateMap<RegisterDto, User>();
             CreateMap<Product, ProductDto>();
+            CreateMap<Image, ImageDto>();
+            CreateMap<Product, ProductDetailsDto>();
+            CreateMap<Product, CartDto>();
+            CreateMap<Address, AddressDto>();
+            CreateMap<UpdatedAddressDto, Address>();
+
         }
     }
 }

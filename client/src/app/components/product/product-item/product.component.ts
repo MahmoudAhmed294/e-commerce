@@ -25,14 +25,16 @@ export class ProductComponent {
 
     addToCart(id: number) {
         this.accountService.currentUser$.subscribe({
-            next: (user) => (this.user = user),
+            next: (user) => {
+                this.user = user;
+            },
             error: () => (this.user = null)
         });
-        console.log();
         if (this.user) {
             this.cartService.addToCart(id).subscribe({
-                next: () => this.toastr.success('product has added to cart'),
+                next: () => this.toastr.success('product has added to cart')
             });
+            this.cartService.getCountSize();
         } else {
             this.toastr.warning('You need to login');
             this.router.navigateByUrl('/login');

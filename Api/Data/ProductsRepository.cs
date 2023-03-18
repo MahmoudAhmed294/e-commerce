@@ -1,9 +1,9 @@
 using Api.Data;
 using Api.Dto;
-using Api.Entities;
 using Api.Helpers;
 using Api.interfaces;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
@@ -18,15 +18,10 @@ namespace Api.Controllers
         }
 
 
-        public Task<bool> AddProductToUserAsync(int id)
+        public async Task<ProductDetailsDto> GetProductAsync(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<Product> GetProductAsync(int id)
-        {
-
-            return await _context.Products.FindAsync(id);
+          var product =  await _context.Products.Include(p => p.Images).SingleOrDefaultAsync(p => p.Id == id);
+            return _mapper.Map<ProductDetailsDto>(product);
         }
 
         public async Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams)
@@ -35,9 +30,9 @@ namespace Api.Controllers
 
             var products = productsQuery.Select(p => new ProductDto
             {
-                Name = p.Name,
+                Name = p.Title,
                 Category = p.Category,
-                Img = p.Img,
+                Img = _mapper.Map<ImageDto>(p.Images.FirstOrDefault(i => i.IsMain)).Url,
                 Price = p.Price,
                 Id = p.Id
             });
