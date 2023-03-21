@@ -1,10 +1,10 @@
 <div class=" row  py-3 align-items-center" *ngIf="product">
     <div class="col-8 d-flex align-items-center">
         <div class="cart-img rounded">
-            <img class="img-fluid " src="{{product.img}}" alt="{{product.name}}">
+            <img class="img-fluid " src="{{product.img}}" alt="{{product.title}}">
         </div>
         <div class="ms-2">
-            <h5>{{product.name}}</h5>
+            <h5>{{product.title}}</h5>
             <p class="text-secandary">{{product.category}}</p>
         </div>
     </div>
@@ -14,15 +14,15 @@
             <button class="btn btn-primary" (click)="plusCounter()">
                 <i class="fa fa-plus" aria-hidden="true"></i>
             </button>
-            <input class="form-control mx-1 " style="width: 45px; text-align: center;"  [(ngModel)]="quantity">
-            <button class="btn btn-primary" (click)="plusMinus()" >
+            <input class="form-control mx-1 " style="width: 45px; text-align: center;" [(ngModel)]="quantity">
+            <button class="btn btn-primary" (click)="plusMinus()">
                 <i class="fa fa-minus" aria-hidden="true"></i>
             </button>
         </div>
     </div>
     <div class="col-1">{{product.price}} EGP</div>
     <div class="col-1">
-        <button class="btn btn-danger">
+        <button class="btn btn-danger" (click)="removeProductCart(product.id)">
             <i class="fa fa-trash" aria-hidden="true"></i>
         </button>
 

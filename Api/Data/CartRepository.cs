@@ -20,21 +20,21 @@ namespace Api.Data
 
         }
 
-        public async Task<bool> UploadProductInCart(int ShoppingCartId, int productId, int quantity)
+        public async Task<bool> UploadProductInCart(User user, int productId, int quantity)
         {
-            var cartItem = _context.CartProducts.SingleOrDefault(c => c.CartId == ShoppingCartId && c.ProductId == productId);
+            var cartItem = _context.CartProducts.SingleOrDefault(c => c.CartId == user.CartId && c.ProductId == productId);
 
             if (cartItem == null) return false;
 
             cartItem.Quantity = quantity;
 
-            return await SaveAllAsync();
+            return await CartTotal(user);
 
         }
-        public async Task<bool> AddProductToCart(int ShoppingCartId, int productId)
+        public async Task<bool> AddProductToCart(User user, int productId)
         {
             var cartItem = _context.CartProducts.SingleOrDefault(
-                c => c.CartId == ShoppingCartId
+                c => c.CartId == user.CartId
                 && c.ProductId == productId);
 
             if (cartItem == null)
@@ -42,7 +42,7 @@ namespace Api.Data
                 cartItem = new CartProducts
                 {
                     ProductId = productId,
-                    CartId = ShoppingCartId,
+                    CartId = user.CartId,
                     Quantity = 1,
                 };
 
@@ -53,10 +53,37 @@ namespace Api.Data
                 cartItem.Quantity++;
             }
 
-            return await _context.SaveChangesAsync() > 0;
+            return await CartTotal(user);
+
 
         }
+        public async Task<bool> CartTotal(User user)
+        {
 
+
+            var cartsQuery = _context.CartProducts.AsQueryable();
+
+
+            var cart = cartsQuery.Where(c => c.CartId == user.CartId);
+
+            var products = cart.Select(p => new
+            {
+                p.Product,
+                p.Quantity,
+            }
+             );
+
+
+            user.Cart.Total = 0;
+                user.Cart.Size = 0;
+            foreach (var item in products)
+            {
+                user.Cart.Total += item.Product.Price * item.Quantity;
+                user.Cart.Size += 1;
+            }
+            return await SaveAllAsync();
+
+        }
         public async Task<bool> DeleteCartProduct(int productId, int userId)
         {
             var user = await _userRepository.GetUser(userId);
@@ -70,7 +97,26 @@ namespace Api.Data
             }
 
 
-            return await SaveAllAsync();
+            return await CartTotal(user);
+
+
+
+        }
+        public async Task<bool> DeleteAllCartProduct(int userId)
+        {
+            var user = await _userRepository.GetUser(userId);
+
+
+            var cartProduct = _context.CartProducts.Where(cp => cp.CartId == user.CartId).ToList();
+
+
+            if (cartProduct != null)
+            {
+                _context.CartProducts.RemoveRange(cartProduct);
+            }
+
+
+            return await CartTotal(user);
 
 
 
@@ -95,13 +141,14 @@ namespace Api.Data
             var productsList = products.Select(p => new CartDto
             {
 
+                Id = p.Product.Id,
                 Title = p.Product.Title,
                 Img = p.Product.Images.FirstOrDefault(p => p.IsMain).Url,
                 Price = p.Product.Price,
                 Category = p.Product.Category,
-                Id = p.Product.Id,
                 Quantity = p.Quantity
             });
+
 
 
             return await PagedList<CartDto>.CreateAsync(productsList, productParams.pageNumber, productParams.PageSize);
@@ -114,9 +161,7 @@ namespace Api.Data
         {
             var user = await _userRepository.GetUser(userId);
 
-            var cartsQuery = _context.CartProducts.AsQueryable();
-
-            return cartsQuery.Where(c => c.CartId == user.CartId).Count();
+            return _context.CartProducts.Where(c => c.CartId == user.CartId).Count();
 
 
         }
@@ -124,5 +169,6 @@ namespace Api.Data
         {
             return _context.SaveChanges() > 0;
         }
+
     }
 }

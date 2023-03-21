@@ -15,8 +15,10 @@ namespace Api.Controllers
         private readonly IMapper _mapper;
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper)
+        private readonly ICartRepository _cartRepository;
+        public AccountController(DataContext context, ITokenService tokenService, IMapper mapper, ICartRepository cartRepository)
         {
+            _cartRepository = cartRepository;
             _mapper = mapper;
             _context = context;
             _tokenService = tokenService;
@@ -47,7 +49,7 @@ namespace Api.Controllers
                 Token = _tokenService.CreateToken(user),
             };
         }
-        
+
         [HttpPost("login")]
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
@@ -56,19 +58,23 @@ namespace Api.Controllers
             if (user == null) return Unauthorized("invalid user information");
 
             using var hmac = new HMACSHA512(user.PasswordSalt);
-            
+
             var computeHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
 
             for (int i = 0; i < computeHash.Length; i++)
             {
-                if(computeHash[i] != user.PasswordHash[i]) return Unauthorized("invalid user information");
+                if (computeHash[i] != user.PasswordHash[i]) return Unauthorized("invalid user information");
             }
 
-            return new UserDto {
+            var cartCount =await _cartRepository.GetCartSize(user.Id);
+
+            return new UserDto
+            {
                 Id = user.Id,
                 Name = user.Name,
                 Email = user.Email,
                 Token = _tokenService.CreateToken(user),
+                CartCount = cartCount
             };
         }
         private async Task<bool> EmailExists(string email)

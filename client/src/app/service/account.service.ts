@@ -6,42 +6,48 @@ import { environment } from 'src/environments/environment';
 import { ILogin, IRegister, IUser } from '../model/user';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class AccountService {
-  baseUrl: string = environment.apiUrl;
-  private currentUserSource = new BehaviorSubject<IUser | null>(null);
-  currentUser$ = this.currentUserSource.asObservable();
+    baseUrl: string = environment.apiUrl;
+    private currentUserSource = new BehaviorSubject<IUser | null>(null);
+    currentUser$ = this.currentUserSource.asObservable();
 
+    constructor(
+        private cookieService: CookieService,
+        private http: HttpClient,
+        ) {}
 
-  constructor(private cookieService: CookieService ,private http: HttpClient) { }
+    login(model: ILogin) {
+        return this.http.post<IUser>(`${this.baseUrl}Account/login`, model).pipe(
+            map((response: IUser) => {
+                const user = response;
+                if (user) {
+                    this.setCurrentUser(user);
+                }
+            })
+        );
+    }
 
-login(model:ILogin){
-return this.http.post<IUser>(`${this.baseUrl}Account/login` ,model).pipe(
-  map((response:IUser)=>{
-    const user = response;
-    if(user) this.setCurrentUser(user);
-  })
-)
-}
-register(model:IRegister){
-return this.http.post<IUser>(`${this.baseUrl}Account/register` ,model).pipe(
-  map((response:IUser)=>{
-    const user = response;
-    if(user) this.setCurrentUser(user);
-  })
-)
-}
+    register(model: IRegister) {
+        return this.http.post<IUser>(`${this.baseUrl}Account/register`, model).pipe(
+            map((response: IUser) => {
+                const user = response;
+                if (user) {
+                    this.setCurrentUser(user);
+                }
+            })
+        );
+    }
 
-setCurrentUser(user: IUser) {
-  this.cookieService.set('user',JSON.stringify(user))
-  this.currentUserSource.next(user);
-}
-logout() {
-  this.cookieService.delete('user');
+    setCurrentUser(user: IUser) {
+        this.cookieService.set('user', JSON.stringify(user));
+        this.currentUserSource.next(user);
+    }
 
-  this.currentUserSource.next(null);
-}
+    logout() {
+        this.cookieService.delete('user');
 
-
+        this.currentUserSource.next(null);
+    }
 }

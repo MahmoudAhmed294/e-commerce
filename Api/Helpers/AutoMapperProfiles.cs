@@ -15,6 +15,7 @@ namespace Api.Helpers
             CreateMap<Product, CartDto>();
             CreateMap<Address, AddressDto>();
             CreateMap<UpdatedAddressDto, Address>();
+            CreateMap<Order, GetOrderDto>();
 
         }
     }

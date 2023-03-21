@@ -10,7 +10,6 @@ namespace Api.Entities
         public int AddressId { get; set; }
         public Address Address { get; set; }
 
-        public ICollection<OrderProducts> OrderProducts { get; set; } // Navigation property
 
         public int Quantity { get; set; }
         public DateTime OrderDate { get; set; } = DateTime.UtcNow;
@@ -19,6 +18,7 @@ namespace Api.Entities
 
         public string Status { get; set; }
         public string PaymentMethod { get; set; }
+        public ICollection<OrderProducts> OrderProducts { get; set; } // Navigation property
 
 
     }

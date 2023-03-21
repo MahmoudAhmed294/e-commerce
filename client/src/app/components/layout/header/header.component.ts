@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { IUser } from 'src/app/model/user';
 import { AccountService } from 'src/app/service/account.service';
 import { CartService } from 'src/app/service/cart.service';
 
@@ -9,9 +9,18 @@ import { CartService } from 'src/app/service/cart.service';
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    cartSize: string | null = null;
+    cartSize: number | null = null;
 
-    constructor(public accountService: AccountService, private cartService: CartService) {}
+    user: IUser | null = null;
+
+    constructor(public accountService: AccountService, private cartService: CartService) {
+        this.accountService.currentUser$.subscribe({
+            next: (user) => {
+                this.user = user;
+            },
+            error: () => (this.user = null)
+        });
+    }
     ngOnInit(): void {
         this.cartService.getCountSize();
         this.getCartSize();

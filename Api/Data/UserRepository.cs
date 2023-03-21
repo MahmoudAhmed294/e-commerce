@@ -14,7 +14,7 @@ namespace Api.Data
         }
         public async Task<User> GetUser(int id)
         {
-            return await _context.Users.Include(p => p.Address).Include(c=>c.Cart).SingleOrDefaultAsync(u => u.Id == id);
+            return await _context.Users.Include(p => p.Address).Include(c => c.Cart).Include(o => o.Orders).SingleOrDefaultAsync(u => u.Id == id);
         }
 
     }

@@ -30,7 +30,7 @@ namespace Api.Controllers
 
             var products = productsQuery.Select(p => new ProductDto
             {
-                Name = p.Title,
+                Title = p.Title,
                 Category = p.Category,
                 Img = _mapper.Map<ImageDto>(p.Images.FirstOrDefault(i => i.IsMain)).Url,
                 Price = p.Price,

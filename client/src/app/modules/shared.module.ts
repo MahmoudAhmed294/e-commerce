@@ -5,6 +5,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 
 @NgModule({
     declarations: [],
@@ -18,8 +19,9 @@ import { RatingModule } from 'ngx-bootstrap/rating';
         }),
         BsDropdownModule.forRoot(),
         PaginationModule.forRoot(),
-        RatingModule.forRoot()
+        RatingModule.forRoot(),
+        NgxGalleryModule
     ],
-    exports: [NgxSpinnerModule, ToastrModule, BsDropdownModule, PaginationModule, RatingModule]
+    exports: [NgxSpinnerModule, ToastrModule, BsDropdownModule, PaginationModule, RatingModule ,NgxGalleryModule]
 })
 export class SharedModule {}

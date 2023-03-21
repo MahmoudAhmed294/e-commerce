@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
     if(!userString) return;
 
+    
       const user : IUser = JSON.parse(userString);
 
       this.accountService.setCurrentUser(user);

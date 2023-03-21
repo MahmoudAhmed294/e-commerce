@@ -23,19 +23,19 @@ namespace Api.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<ActionResult> AddProductToCart(int id)
+        public async Task<ActionResult<bool>> AddProductToCart(int id)
         {
             var userId = User.GetUserId();
 
             var user = await _userRepository.GetUser(userId);
 
-            var cart = _cartRepository.AddProductToCart(user.CartId, id);
+            var cart = await _cartRepository.AddProductToCart(user, id);
 
-            if (cart == null) return BadRequest("this item already added to cart");
+            if (!cart) return BadRequest();
 
 
 
-            return Ok();
+            return Ok(cart);
 
 
         }
@@ -83,10 +83,10 @@ namespace Api.Controllers
             var userId = User.GetUserId();
 
             if (quantity == 0) return NoContent();
-            
+
             var user = await _userRepository.GetUser(userId);
 
-            var isUpdate = await _cartRepository.UploadProductInCart(user.CartId, id, quantity);
+            var isUpdate = await _cartRepository.UploadProductInCart(user, id, quantity);
 
             if (isUpdate) return Ok(isUpdate);
 
