@@ -17,7 +17,6 @@ export class PaginationService {
     }
 
     getProductParams() {
-        
         return this.productParams;
     }
 

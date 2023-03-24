@@ -24,6 +24,10 @@ import { ProductListComponent } from './components/product/product-list/product-
 import { CartComponent } from './components/cart/cart-item/cart.component';
 import { CartListComponent } from './components/cart/cart-list/cart-list.component';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
+import { AddAddressComponent } from './components/address/add-address.component';
+import { OrderComponent } from './components/orders/order.component';
+import { OrderListComponent } from './components/orders/order-list.component';
+import { OrderItemComponent } from './components/orders/order-item.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +44,11 @@ import { ProductDetailsComponent } from './components/product/product-details/pr
     ProductListComponent,
     CartComponent,
     CartListComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    AddAddressComponent,
+    OrderComponent,
+    OrderListComponent,
+    OrderItemComponent
     
   ],
   imports: [

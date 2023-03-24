@@ -6,7 +6,7 @@ export interface IProducts {
     id: number;
     title: string;
     category: string;
-    price: string;
+    price: number;
     img: IImage;
 }
 export interface IProductsDetails extends IProducts {
@@ -20,6 +20,5 @@ export interface IProductsDetails extends IProducts {
 }
 
 export interface ICart extends IProducts {
-    
     quantity: number;
 }

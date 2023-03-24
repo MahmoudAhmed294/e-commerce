@@ -10,6 +10,7 @@ import { AccountService } from 'src/app/service/account.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit{
+
 ngOnInit(): void {
   this.initializeForm()
 }
@@ -17,7 +18,6 @@ registerForm:FormGroup = new FormGroup({});
 validationErrors: string[] | undefined;
 
 constructor(
-  private toastr: ToastrService,
   public accountService: AccountService,
   private fb: FormBuilder,
   private router: Router
@@ -42,6 +42,7 @@ matchPassword(matchTo:string):ValidatorFn {
     : {notMatching: true}
   }
 }
+
 register(){
   this.accountService.register(this.registerForm.value).subscribe({
     next:()=>{

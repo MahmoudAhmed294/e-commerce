@@ -79,13 +79,13 @@ namespace Api.Controllers
 
 
         }
-        
+
         [HttpPut("{id}")]
         public async Task<ActionResult<bool>> UpdateAddress(int id, UpdatedAddressDto address)
         {
             var userId = User.GetUserId();
 
-            var targeAddress = await _addressRepository.UpdateAddress(userId, id ,address);
+            var targeAddress = await _addressRepository.UpdateAddress(userId, id, address);
 
             return Ok(targeAddress);
 
@@ -97,7 +97,7 @@ namespace Api.Controllers
         {
             var userId = User.GetUserId();
 
-            var targeAddress = await _addressRepository.SetMainAddress(userId,id);
+            var targeAddress = await _addressRepository.SetMainAddress(userId, id);
 
             return Ok(targeAddress);
 
@@ -110,9 +110,9 @@ namespace Api.Controllers
 
             var address = await _addressRepository.GetAllAddress(userId);
 
-            if (address == null)
+            if (address.Count == 0)
             {
-                return BadRequest("No Addres for this user");
+                return NoContent();
             }
 
             return Ok(address);

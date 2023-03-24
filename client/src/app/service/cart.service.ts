@@ -4,11 +4,12 @@ import { HttpClient } from '@angular/common/http';
 import { ICart } from '../model/product';
 import { environment } from 'src/environments/environment';
 import { ProductParams } from '../model/productParams';
-import { BehaviorSubject, filter, map } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { IUser } from '../model/user';
 import { AccountService } from './account.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
     providedIn: 'root'
@@ -21,25 +22,18 @@ export class CartService {
     private currentCartSize = new BehaviorSubject<number | null>(null);
     currentSize$ = this.currentCartSize.asObservable();
 
-    private user: IUser | null = null;
-
     constructor(
         private paginationService: PaginationService,
         private http: HttpClient,
-        private accountService: AccountService,
         private toastr: ToastrService,
-        private router: Router
+        private router: Router,
+        private cookieService: CookieService
     ) {}
 
     addToCart(id: number) {
-        this.accountService.currentUser$.subscribe({
-            next: (user) => {
-                this.user = user;
-            },
-            error: () => (this.user = null)
-        });
+        const userString = this.cookieService.get('user');
 
-        if (this.user) {
+        if (userString) {
             this.http.post<ICart>(`${this.baseUrl}Cart/${id}`, {}).subscribe({
                 next: () => {
                     this.toastr.success('Product added Successfully ');
@@ -53,7 +47,7 @@ export class CartService {
     }
 
     getCountSize() {
-        this.http.get<string>(`${this.baseUrl}Cart/size`).subscribe({
+        this.http.get<number>(`${this.baseUrl}Cart/size`).subscribe({
             next: (res: any) => this.setCurrentSize(res)
         });
     }
@@ -61,8 +55,7 @@ export class CartService {
     updateCount(quantity: number, id: number) {
         this.http.put<boolean>(`${this.baseUrl}Cart/${id}/quantity/${quantity}`, {}).subscribe({
             next: (res) => console.log(res),
-            error: (err) => {
-                console.log(err);
+            error: (_) => {
                 this.toastr.error('error happened');
             }
         });

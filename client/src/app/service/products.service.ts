@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { IProducts, IProductsDetails } from '../model/product';
 import { HttpClient } from '@angular/common/http';
@@ -9,8 +9,10 @@ import { ProductParams } from '../model/productParams';
 @Injectable({
     providedIn: 'root'
 })
+
 export class ProductsService {
     baseUrl: string = environment.apiUrl;
+    
     products: IProducts[] = [];
 
     constructor(private paginationService: PaginationService, private http: HttpClient) {}
