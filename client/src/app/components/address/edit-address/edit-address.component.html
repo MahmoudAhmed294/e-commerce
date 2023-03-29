@@ -1,0 +1,18 @@
+<div class="row justify-content-center algin-items-center mt-5">
+    <div class="col-4 shadow-sm p-3 bg-body-tertiary rounded">
+
+        <form [formGroup]="addressForm" (ngSubmit)="addressForm.valid && updateAddress()" autocomplete="off">
+            <h2 class="text-center text-primary mb-5 mt-2">Add an Address </h2>
+
+            <app-text-input [formControl]="$any(addressForm.controls['phone'])" [label]="'phone'"></app-text-input>
+            <app-text-input [formControl]="$any(addressForm.controls['country'])" [label]="'country'"></app-text-input>
+            <app-text-input [formControl]="$any(addressForm.controls['city'])" [label]="'city'"></app-text-input>
+            <app-text-input [formControl]="$any(addressForm.controls['userAddress'])" [label]="'address'"></app-text-input>
+            <div class="d-flex justify-content-between">
+                <button class="btn btn-outline-danger  mt-2 " type="Back to home">cancel</button>
+                <button [disabled]="!addressForm.valid" class="btn btn-primary  mt-2 " type="submit">Save</button>
+            </div>
+
+        </form>
+    </div>
+</div>

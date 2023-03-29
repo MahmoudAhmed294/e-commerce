@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {  HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -24,61 +24,66 @@ import { ProductListComponent } from './components/product/product-list/product-
 import { CartComponent } from './components/cart/cart-item/cart.component';
 import { CartListComponent } from './components/cart/cart-list/cart-list.component';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
-import { AddAddressComponent } from './components/address/add-address.component';
+import { AddAddressComponent } from './components/address/add-address/add-address.component';
 import { OrderComponent } from './components/orders/order.component';
-import { OrderListComponent } from './components/orders/order-list.component';
-import { OrderItemComponent } from './components/orders/order-item.component';
+import { OrderProductsComponent } from './components/orders/order-products/order-products.component';
+import { AllAddressComponent } from './components/address/all-address/all-address.component';
+import { AddressDetailsComponent } from './components/address/address-details/address-details.component';
+import { EditAddressComponent } from './components/address/edit-address/edit-address.component';
+import { AddressItemsComponent } from './components/address/address-items/address-items.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    TextInputComponent,
-    NotFoundComponent,
-    ServerErrorComponent,
-    HeaderComponent,
-    FooterComponent,
-    ProductComponent,
-    ProductListComponent,
-    CartComponent,
-    CartListComponent,
-    ProductDetailsComponent,
-    AddAddressComponent,
-    OrderComponent,
-    OrderListComponent,
-    OrderItemComponent
-    
-  ],
-  imports: [
-    BrowserAnimationsModule,
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    SharedModule,
-  ],
-  providers: [CookieService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ErrorInterceptor,
-      multi: true
-  },
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        HomeComponent,
+        TextInputComponent,
+        NotFoundComponent,
+        ServerErrorComponent,
+        HeaderComponent,
+        FooterComponent,
+        ProductComponent,
+        ProductListComponent,
+        CartComponent,
+        CartListComponent,
+        ProductDetailsComponent,
+        AddAddressComponent,
+        OrderComponent,
+        OrderProductsComponent,
+        AllAddressComponent,
+        AddressDetailsComponent,
+        EditAddressComponent,
+        AddressItemsComponent
+    ],
+    imports: [
+        BrowserAnimationsModule,
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule,
+        SharedModule
+    ],
+    providers: [
+        CookieService,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorInterceptor,
+            multi: true
+        },
 
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: JwtInterceptor,
-      multi: true
-  },
-  {
-      provide: HTTP_INTERCEPTORS,
-      useClass: LoadingInterceptor,
-      multi: true
-  }
-
-  ],
-  bootstrap: [AppComponent]
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: LoadingInterceptor,
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

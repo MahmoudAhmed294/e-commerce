@@ -1,1 +1,116 @@
-<p>order works!</p>
+<head>
+    <script src="https://js.stripe.com/v3" async></script>
+
+</head>
+<div class="card p-5 mt-5">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex">
+            <h4>Order ID:</h4>
+            <h4 class="ms-1">{{orderId}}</h4>
+        </div>
+        <h4>${{total}}</h4>
+    </div>
+    <div class="d-flex text-dark">
+        <p>Product</p>
+        <p>4</p>
+    </div>
+    <div class="row">
+        <div class="col-5">
+            <div class="mb-2 d-flex align-items-baseline">
+                <p class="text-primary me-2">Shipped</p>
+                <progressbar [value]="35"></progressbar>
+                <p class="text-info ms-2 text-nowrap">track order</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="p-2">
+                <div class="bg-light p-2">
+                    <h5 class="ms-2">Ordered Products</h5>
+                </div>
+                <div *ngFor="let product of orderProduct" class="border-bottom border-secandary mb-1">
+                    <app-order-products [product]=product></app-order-products>
+                </div>
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <h5>subtotal:</h5>
+                        <h5>${{total}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <h5>Shipping cost:</h5>
+                        <h5>${{shippingCost}}</h5>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <h5>total</h5>
+                        <h5>{{total + shippingCost}}</h5>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <div>
+                <div class="bg-light mt-3 p-2">
+                    <h5 class="ms-2">Ordered Details</h5>
+                </div>
+                <div class="mt-2 p-2 ms-2">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Order ID:</p>
+                        <p>{{orderId}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Date & Time:</p>
+                        <p> {{ currentDate | date:'yyyy/MM/dd h:mm a' }}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div *ngIf="user">
+                <div class="bg-light p-2 mt-3">
+                    <h5 class="ms-2">Personal Details</h5>
+                </div>
+                <div class="mt-2 p-2 ms-2">
+
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Name:</p>
+                        <p>{{user.name}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Email:</p>
+                        <p>{{user.email}}</p>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="mainAddress">
+                <div class="bg-light p-2 mt-3 d-flex justify-content-between align-items-center">
+                    <h5 class="ms-2">Shipping Address</h5>
+                    <a  routerLink="/address"> Change</a>
+                </div>
+                <div class="mt-2 p-2 ms-2">
+
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Address:</p>
+                        <p>{{mainAddress.userAddress}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Country:</p>
+                        <p>{{mainAddress.country}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>City:</p>
+                        <p>{{mainAddress.city}}</p>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                        <p>Phone:</p>
+                        <p>{{mainAddress.phone}}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center w-100 mt-5">
+            <button class="btn btn-primary" (click)="makeOrder()">Confirm</button>
+            <button class="btn btn-outline-danger ms-5">Cancel</button>
+        </div>
+    </div>

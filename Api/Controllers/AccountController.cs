@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Controllers
 {
+
     public class AccountController : BaseApiController
     {
         private readonly IMapper _mapper;
@@ -51,6 +52,7 @@ namespace Api.Controllers
         }
 
         [HttpPost("login")]
+
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.Email == loginDto.Email);
@@ -66,7 +68,7 @@ namespace Api.Controllers
                 if (computeHash[i] != user.PasswordHash[i]) return Unauthorized("invalid user information");
             }
 
-            var cartCount =await _cartRepository.GetCartSize(user.Id);
+            var cartCount = await _cartRepository.GetCartSize(user.Id);
 
             return new UserDto
             {

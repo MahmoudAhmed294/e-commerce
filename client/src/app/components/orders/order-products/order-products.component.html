@@ -1,0 +1,13 @@
+<div class=" row  py-3 align-items-center justify-content-between" *ngIf="product">
+    <div class="col-10 d-flex align-items-center">
+        <div class="cart-img rounded">
+            <img class="img-fluid" style="height: 100px; width: 180px;" src="{{product.img}}" alt="{{product.title}}">
+        </div>
+        <div class="ms-2">
+            <h5>{{product.title}}</h5>
+            <p class="text-secandary ">x{{product.quantity}}</p>
+        </div>
+    </div>
+
+    <div class="col-2 fw-bold text-end">${{product.price}}</div>
+</div>

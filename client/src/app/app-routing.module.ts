@@ -8,8 +8,10 @@ import { ServerErrorComponent } from './components/errors/server-error/server-er
 import { CartListComponent } from './components/cart/cart-list/cart-list.component';
 import { ProductDetailsComponent } from './components/product/product-details/product-details.component';
 import { AuthGuard } from './guards/auth.guard';
-import { AddAddressComponent } from './components/address/add-address.component';
+import { AddAddressComponent } from './components/address/add-address/add-address.component';
 import { OrderComponent } from './components/orders/order.component';
+import { AllAddressComponent } from './components/address/all-address/all-address.component';
+import { EditAddressComponent } from './components/address/edit-address/edit-address.component';
 
 const routes: Routes = [
     {
@@ -32,6 +34,14 @@ const routes: Routes = [
             {
                 path: 'make-order',
                 component: OrderComponent
+            },
+            {
+                path: 'address',
+                component: AllAddressComponent
+            },
+            {
+                path: 'edit-address/:id',
+                component: EditAddressComponent
             }
         ]
     },

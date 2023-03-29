@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { IAddress, ISetAddress } from '../model/Address';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs';
@@ -11,21 +10,12 @@ import { map } from 'rxjs';
 export class AddressService {
     address: IAddress[] | null = null;
     baseUrl: string = environment.apiUrl;
+    mainAddress: IAddress | null = null;
 
-    constructor(private http: HttpClient, private router: Router) {}
+    constructor(private http: HttpClient) {}
 
     getAddresses() {
-        this.http.get<IAddress[]>(`${this.baseUrl}Address/all`).subscribe({
-  
-            next: (responsive) => {
-                this.address = responsive;
-                if (responsive) {
-                    this.router.navigateByUrl('make-order');
-                } else {
-                    this.router.navigateByUrl('add-address');
-                }
-            }
-        });
+        return this.http.get<IAddress[]>(`${this.baseUrl}Address/all`);
     }
 
     addAddress(address: ISetAddress) {
@@ -36,11 +26,28 @@ export class AddressService {
         );
     }
 
-    getAddress(id: number) {}
+    getMainAddress() {
+        return this.http.get(`${this.baseUrl}Address`).pipe(
+            map((res) => {
+                if (!res) return;
+                return res;
+            })
+        );
+    }
 
-    updateAddress(id: number) {}
+    deleteAddress(id: number) {
+        return this.http.delete(`${this.baseUrl}Address/${id}`, {});
+    }
 
-    deleteAddress(id: number) {}
+    changeMainAddress(id: number) {
+        return this.http.put(`${this.baseUrl}Address/set-main-address/${id}`, {});
+    }
 
-    changeMainAddress(id: number) {}
+    getAddress(id: number) {
+        return this.http.get<IAddress>(`${this.baseUrl}Address/${id}`);
+    }
+
+    updateAddress(address: IAddress) {
+        return this.http.put(`${this.baseUrl}Address/${address.id}`, address);
+    }
 }

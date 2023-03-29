@@ -1,9 +1,11 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IPagination } from 'src/app/model/pagination';
 import { ICart } from 'src/app/model/product';
 import { ProductParams } from 'src/app/model/productParams';
 import { AddressService } from 'src/app/service/address.service';
 import { CartService } from 'src/app/service/cart.service';
+import { OrderService } from 'src/app/service/order.service';
 import { PaginationService } from 'src/app/service/pagination.service';
 
 @Component({
@@ -21,7 +23,9 @@ export class CartListComponent implements OnInit {
     constructor(
         private cartService: CartService,
         private paginationService: PaginationService,
-        private addressService: AddressService
+        private addressService: AddressService,
+        private orderService: OrderService,
+        private router: Router
     ) {
         this.productParams = this.paginationService.getProductParams();
     }
@@ -72,8 +76,20 @@ export class CartListComponent implements OnInit {
     }
 
     checkAddress() {
-        
-        this.addressService.getAddresses();
-        
+        if (this.products) {
+            this.addressService.getAddresses().subscribe({
+                next: (responsive) => {
+                    if (responsive) {
+                        this.router.navigateByUrl('make-order');
+                    } else {
+                        this.router.navigateByUrl('add-address');
+                    }
+                }
+            });
+
+            this.orderService.setOrderProduct(this.products);
+            this.orderService.setOrderShippingCost(this.shippingCost);
+            this.orderService.setOrderTotal(this.total);
+        }
     }
 }

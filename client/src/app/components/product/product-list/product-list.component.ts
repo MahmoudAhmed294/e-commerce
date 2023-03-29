@@ -39,6 +39,7 @@ export class ProductListComponent {
             });
         }
     }
+    
     pageChanged(event: any) {
         if (this.productParams && this.productParams?.pageNumber !== event.page) {
             this.productParams.pageNumber = event.page;

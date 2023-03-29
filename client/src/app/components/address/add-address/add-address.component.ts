@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AddressService } from 'src/app/service/address.service';
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'app-add-address',
@@ -15,7 +16,7 @@ export class AddAddressComponent implements OnInit {
     constructor(
         public addressService: AddressService,
         private fb: FormBuilder,
-        private router: Router
+        private location: Location
     ) {}
 
     ngOnInit(): void {
@@ -32,10 +33,9 @@ export class AddAddressComponent implements OnInit {
     }
 
     addAddress() {
-
         if (this.addressForm.value) {
             this.addressService.addAddress(this.addressForm.value).subscribe({
-                next: (_) => this.router.navigateByUrl('/make-order')
+                next: (_) => this.location.back()
             });
         }
     }
