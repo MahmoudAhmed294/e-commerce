@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ICart } from '../model/product';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { HttpClient } from '@angular/common/http';
 import { IOrder } from '../model/order';
 import { environment } from 'src/environments/environment';
@@ -15,12 +14,16 @@ export class OrderService {
     shippingCost: number = 0;
     baseUrl: string = environment.apiUrl;
 
-    constructor(private http: HttpClient, private toastr: ToastrService, private router: Router) {}
+    constructor(private http: HttpClient, private router: Router) {}
 
     makeOrder(order: IOrder) {
         return this.http.post(`${this.baseUrl}Order`, order).subscribe({
             next: () => this.router.navigateByUrl('/')
         });
+    }
+    
+    getOrders(){
+        return this.http.get<IOrder[]>(`${this.baseUrl}Order`);
     }
 
     setOrderProduct(product: ICart[]): void {

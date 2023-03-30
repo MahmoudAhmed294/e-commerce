@@ -31,6 +31,8 @@ import { AllAddressComponent } from './components/address/all-address/all-addres
 import { AddressDetailsComponent } from './components/address/address-details/address-details.component';
 import { EditAddressComponent } from './components/address/edit-address/edit-address.component';
 import { AddressItemsComponent } from './components/address/address-items/address-items.component';
+import { AllOrdersComponent } from './components/orders/all-orders/all-orders.component';
+import { OrderItemComponent } from './components/orders/order-item/order-item.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +56,9 @@ import { AddressItemsComponent } from './components/address/address-items/addres
         AllAddressComponent,
         AddressDetailsComponent,
         EditAddressComponent,
-        AddressItemsComponent
+        AddressItemsComponent,
+        AllOrdersComponent,
+        OrderItemComponent
     ],
     imports: [
         BrowserAnimationsModule,

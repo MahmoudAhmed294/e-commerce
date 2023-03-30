@@ -12,6 +12,7 @@ import { AddAddressComponent } from './components/address/add-address/add-addres
 import { OrderComponent } from './components/orders/order.component';
 import { AllAddressComponent } from './components/address/all-address/all-address.component';
 import { EditAddressComponent } from './components/address/edit-address/edit-address.component';
+import { AllOrdersComponent } from './components/orders/all-orders/all-orders.component';
 
 const routes: Routes = [
     {
@@ -34,6 +35,10 @@ const routes: Routes = [
             {
                 path: 'make-order',
                 component: OrderComponent
+            },
+            {
+                path: 'orders',
+                component: AllOrdersComponent
             },
             {
                 path: 'address',

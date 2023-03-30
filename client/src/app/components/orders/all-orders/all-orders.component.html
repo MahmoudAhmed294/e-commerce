@@ -1,0 +1,10 @@
+<div class="my-5">
+    <div class="row text-primary border-bottom border-primary bg-light py-3">
+        <h6 class="col-8  ">Order</h6>
+        <h6 class="col-1  ">Action</h6>
+    </div>
+    <div class="border-bottom border-secandary mb-1" *ngFor="let order of orders">
+        <app-order-item (cancelOrder)="cancelOrder($event)" [orders]="order"></app-order-item>
+    </div>
+
+</div>
